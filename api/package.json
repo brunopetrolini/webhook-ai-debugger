@@ -1,0 +1,10 @@
+{
+  "name": "webhook-ai-debugger-api",
+  "version": "1.0.0",
+  "description": "API for Webhook AI Debugger",
+  "main": "index.js",
+  "scripts": {},
+  "author": "Bruno Petrolini <bruno.petrolini@outlook.com.br>",
+  "license": "MIT",
+  "packageManager": "pnpm@10.17.0"
+}
