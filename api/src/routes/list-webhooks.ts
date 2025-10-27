@@ -23,10 +23,12 @@ export const listWebhooks: FastifyPluginAsyncZod = async (app) => {
   }, async (request, reply) => {
     const { limit } = request.query;
 
+    const methodsMock = ['POST', 'GET', 'PUT', 'DELETE'];
+
     // Placeholder data - replace with actual data retrieval logic
     const webhooks = Array.from({ length: limit }, (_, i) => ({
       id: `webhook-${i + 1}`,
-      method: 'POST',
+      method: methodsMock[i % methodsMock.length],
       url: `https://example.com/webhook/${i + 1}`
     }));
 

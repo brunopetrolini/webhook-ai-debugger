@@ -8,6 +8,7 @@ import {
   validatorCompiler,
   type ZodTypeProvider,
 } from 'fastify-type-provider-zod';
+import { env } from './env';
 import { listWebhooks } from './routes/list-webhooks';
 
 const app = fastify();
@@ -43,7 +44,7 @@ app.register(ScalarApiReference, { routePrefix: '/docs', configuration: {
 const defaultPrefix = '/api';
 app.register(listWebhooks, { prefix: defaultPrefix });
 
-app.listen({ port: 3333, host: "0.0.0.0" }, (err, address) => {
+app.listen({ port: env.PORT, host: env.HOST }, (err, address) => {
   if (err) {
     console.error(err);
     process.exit(1);
