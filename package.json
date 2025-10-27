@@ -1,0 +1,12 @@
+{
+  "name": "webhook-ai-debugger",
+  "version": "1.0.0",
+  "description": "A debugger for webhook with AI",
+  "private": true,
+  "workspaces": [
+    "api",
+    "web"
+  ],
+  "author": "Bruno Petrolini <bruno.petrolini@outlook.com.br>",
+  "license": "MIT"
+}
