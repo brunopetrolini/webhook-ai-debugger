@@ -10,6 +10,7 @@ const envSchema = z.object({
   PORT: z.coerce
     .number({ message: "PORT must be a valid number" })
     .default(3333),
+  DATABASE_URL: z.url({ message: "DATABASE_URL must be a valid database connection URL" }),
 });
 
 export const env = envSchema.parse(process.env);
