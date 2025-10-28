@@ -1,9 +1,8 @@
 import "./index.css";
 
+import { createRouter, RouterProvider } from "@tanstack/react-router";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-
-import { createRouter, RouterProvider } from "@tanstack/react-router";
 
 import { routeTree } from "./routeTree.gen";
 
@@ -15,6 +14,7 @@ declare module "@tanstack/react-router" {
   }
 }
 
+// biome-ignore lint/style/noNonNullAssertion: root element is guaranteed to exist
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <RouterProvider router={router} />
