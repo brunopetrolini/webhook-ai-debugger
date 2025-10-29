@@ -28,7 +28,7 @@ export const listWebhooks: FastifyPluginAsyncZod = async (app) => {
                 createdAt: true,
               }),
             ),
-            next_cursor: z.string().nullable(),
+            nextCursor: z.string().nullable(),
           }),
         },
       },
@@ -54,7 +54,7 @@ export const listWebhooks: FastifyPluginAsyncZod = async (app) => {
 
       return reply.status(200).send({
         webhooks: items,
-        next_cursor: nextCursor,
+        nextCursor,
       });
     },
   );
