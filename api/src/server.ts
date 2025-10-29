@@ -9,6 +9,9 @@ import {
   type ZodTypeProvider,
 } from "fastify-type-provider-zod";
 import { env } from "./env";
+import { captureWebhook } from "./routes/capture-webhook";
+import { deleteWebhook } from "./routes/delete-webhook";
+import { getWebhook } from "./routes/get-webhook";
 import { listWebhooks } from "./routes/list-webhooks";
 
 const app = fastify();
@@ -46,6 +49,9 @@ app.register(ScalarApiReference, {
  */
 const defaultPrefix = "/api";
 app.register(listWebhooks, { prefix: defaultPrefix });
+app.register(getWebhook, { prefix: defaultPrefix });
+app.register(deleteWebhook, { prefix: defaultPrefix });
+app.register(captureWebhook, { prefix: defaultPrefix });
 
 app.listen({ port: env.PORT, host: env.HOST }, (err, address) => {
   if (err) {
