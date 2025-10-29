@@ -210,17 +210,26 @@ function generateStripeWebhook() {
 async function seed() {
   console.log("🌱 Starting seed...");
 
-  // Generate webhooks with varied creation dates (last 30 days)
+  const now = new Date();
   const webhooksData = Array.from({ length: 75 }, (_, index) => {
-    // Distribute webhooks over the last 30 days
-    const daysAgo = Math.floor((index / 75) * 30);
     const createdAt = new Date();
-    createdAt.setDate(createdAt.getDate() - daysAgo);
 
-    // Add some random hours/minutes for more variety
-    createdAt.setHours(faker.number.int({ min: 0, max: 23 }));
-    createdAt.setMinutes(faker.number.int({ min: 0, max: 59 }));
-    createdAt.setSeconds(faker.number.int({ min: 0, max: 59 }));
+    // First 15 items: within current day with different hours/minutes
+    if (index < 15) {
+      // Same day, but subtract some hours
+      const hoursAgo = faker.number.int({ min: 0, max: 12 });
+      const minutesAgo = faker.number.int({ min: 0, max: 59 });
+      createdAt.setHours(now.getHours() - hoursAgo);
+      createdAt.setMinutes(now.getMinutes() - minutesAgo);
+      createdAt.setSeconds(faker.number.int({ min: 0, max: 59 }));
+    } else {
+      // Remaining items: distribute over the last 5 days
+      const daysAgo = faker.number.int({ min: 1, max: 5 });
+      createdAt.setDate(now.getDate() - daysAgo);
+      createdAt.setHours(faker.number.int({ min: 0, max: 23 }));
+      createdAt.setMinutes(faker.number.int({ min: 0, max: 59 }));
+      createdAt.setSeconds(faker.number.int({ min: 0, max: 59 }));
+    }
 
     return {
       ...generateStripeWebhook(),
