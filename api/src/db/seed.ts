@@ -33,6 +33,18 @@ const STRIPE_EVENTS = [
   "payout.failed",
 ];
 
+// Different webhook pathnames for variety
+const WEBHOOK_PATHNAMES = [
+  "/webhooks/stripe",
+  "/api/webhooks/stripe",
+  "/stripe/webhook",
+  "/api/stripe/events",
+  "/webhooks/payments",
+  "/payments/stripe/webhook",
+  "/v1/webhooks/stripe",
+  "/integrations/stripe/webhook",
+];
+
 function generateStripeWebhook() {
   const eventType = faker.helpers.arrayElement(STRIPE_EVENTS);
   const chargeId = `ch_${faker.string.alphanumeric(24)}`;
@@ -181,7 +193,7 @@ function generateStripeWebhook() {
 
   return {
     method: "POST",
-    pathname: "/stripe/webhook",
+    pathname: faker.helpers.arrayElement(WEBHOOK_PATHNAMES),
     ip: faker.internet.ipv4(),
     statusCode: 200,
     contentType: "application/json",
@@ -198,9 +210,23 @@ function generateStripeWebhook() {
 async function seed() {
   console.log("🌱 Starting seed...");
 
-  const webhooksData = Array.from({ length: 75 }, () =>
-    generateStripeWebhook(),
-  );
+  // Generate webhooks with varied creation dates (last 30 days)
+  const webhooksData = Array.from({ length: 75 }, (_, index) => {
+    // Distribute webhooks over the last 30 days
+    const daysAgo = Math.floor((index / 75) * 30);
+    const createdAt = new Date();
+    createdAt.setDate(createdAt.getDate() - daysAgo);
+
+    // Add some random hours/minutes for more variety
+    createdAt.setHours(faker.number.int({ min: 0, max: 23 }));
+    createdAt.setMinutes(faker.number.int({ min: 0, max: 59 }));
+    createdAt.setSeconds(faker.number.int({ min: 0, max: 59 }));
+
+    return {
+      ...generateStripeWebhook(),
+      createdAt,
+    };
+  });
 
   await db.insert(webhooks).values(webhooksData);
 
