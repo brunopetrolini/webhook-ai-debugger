@@ -3,7 +3,7 @@ import { codeToHtml } from "shiki";
 import { twMerge } from "tailwind-merge";
 
 interface CodeBlockProps extends ComponentProps<"div"> {
-  code: string;
+  code: Record<string, unknown> | string;
   language?: string;
 }
 
@@ -17,7 +17,12 @@ export function CodeBlock({
 
   useEffect(() => {
     if (code) {
-      codeToHtml(code, { lang: language, theme: "vesper" }).then(setParsedCode);
+      const codeString =
+        typeof code === "string" ? code : JSON.stringify(code, null, 2);
+      codeToHtml(codeString, {
+        lang: language,
+        theme: "vesper",
+      }).then(setParsedCode);
     }
   }, [code, language]);
 
