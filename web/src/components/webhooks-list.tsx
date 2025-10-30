@@ -1,24 +1,80 @@
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
+import { LoaderCircle } from "lucide-react";
+import { useEffect, useRef } from "react";
 import { webhookListSchema } from "../http/schemas/webhooks";
 import { WebhooksListItem } from "./webhooks-list-item";
 
 export function WebhooksList() {
-  const { data } = useSuspenseQuery({
-    queryKey: ["webhooks"],
-    queryFn: async () => {
-      const response = await fetch("http://localhost:4000/api/webhooks");
-      const data = await response.json();
-      return webhookListSchema.parse(data);
-    },
-  });
+  const loadMoreRef = useRef<HTMLDivElement>(null);
+  const intersectionObserverRef = useRef<IntersectionObserver>(null);
+
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useSuspenseInfiniteQuery({
+      queryKey: ["webhooks"],
+      queryFn: async ({ pageParam }) => {
+        const url = new URL("http://localhost:4000/api/webhooks");
+
+        if (pageParam) {
+          url.searchParams.set("cursor", pageParam);
+        }
+
+        const response = await fetch(url);
+        const data = await response.json();
+        return webhookListSchema.parse(data);
+      },
+      getNextPageParam: (lastPage) => {
+        return lastPage.nextCursor ?? undefined;
+      },
+      initialPageParam: undefined as string | undefined,
+    });
+
+  const webhooks = data.pages.flatMap((page) => page.webhooks);
+
+  useEffect(() => {
+    if (intersectionObserverRef.current) {
+      intersectionObserverRef.current.disconnect();
+    }
+
+    intersectionObserverRef.current = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        if (entry.isIntersecting && hasNextPage && !isFetchingNextPage) {
+          fetchNextPage();
+        }
+      },
+      {
+        threshold: 0.1,
+      },
+    );
+
+    if (loadMoreRef.current) {
+      intersectionObserverRef.current.observe(loadMoreRef.current);
+    }
+
+    return () => {
+      if (intersectionObserverRef.current) {
+        intersectionObserverRef.current.disconnect();
+      }
+    };
+  }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
 
   return (
     <div className="flex-1 overflow-y-auto">
       <div className="space-y-1 p-2">
-        {data.webhooks.map((webhook) => (
+        {webhooks.map((webhook) => (
           <WebhooksListItem key={webhook.id} webhook={webhook} />
         ))}
       </div>
+
+      {hasNextPage && (
+        <div className="p-2" ref={loadMoreRef}>
+          {isFetchingNextPage && (
+            <div className="flex items-center justify-center py-4">
+              <LoaderCircle className="size-5 animate-spin text-zinc-500" />
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }
