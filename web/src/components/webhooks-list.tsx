@@ -101,7 +101,7 @@ export function WebhooksList() {
         <div className="fixed bottom-3 right-3 z-10">
           <button
             type="button"
-            className="group flex items-center justify-center min-w-10 min-h-10 gap-0 rounded-full text-white bg-indigo-400 font-medium text-sm transition-all duration-300 ease-in-out hover:gap-3 hover:pl-4 hover:pr-5 cursor-pointer"
+            className="group flex items-center justify-center min-w-10 min-h-10 gap-0 rounded-lg text-white bg-indigo-400 font-medium text-sm transition-all duration-300 ease-in-out hover:gap-3 hover:pl-4 hover:pr-5 cursor-pointer"
             onClick={handleGenerateHandler}
           >
             <Wand2 className="size-4 shrink-0" />
