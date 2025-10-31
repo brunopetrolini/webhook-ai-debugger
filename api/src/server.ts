@@ -11,6 +11,7 @@ import {
 import { env } from "./env";
 import { captureWebhook } from "./routes/capture-webhook";
 import { deleteWebhook } from "./routes/delete-webhook";
+import { generateHandler } from "./routes/generate-handler";
 import { getWebhook } from "./routes/get-webhook";
 import { listWebhooks } from "./routes/list-webhooks";
 
@@ -52,6 +53,7 @@ app.register(listWebhooks, { prefix: defaultPrefix });
 app.register(getWebhook, { prefix: defaultPrefix });
 app.register(deleteWebhook, { prefix: defaultPrefix });
 app.register(captureWebhook, { prefix: defaultPrefix });
+app.register(generateHandler, { prefix: defaultPrefix });
 
 app.listen({ port: env.PORT, host: env.HOST }, (err, address) => {
   if (err) {
