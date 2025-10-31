@@ -10,7 +10,12 @@ const envSchema = z.object({
   PORT: z.coerce
     .number({ message: "PORT must be a valid number" })
     .default(3333),
-  DATABASE_URL: z.url({ message: "DATABASE_URL must be a valid database connection URL" }),
+  DATABASE_URL: z.url({
+    message: "DATABASE_URL must be a valid database connection URL",
+  }),
+  GEMINI_API_KEY: z.string({
+    message: "GEMINI_API_KEY must be a valid string",
+  }),
 });
 
 export const env = envSchema.parse(process.env);
