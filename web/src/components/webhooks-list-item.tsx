@@ -8,9 +8,15 @@ import { IconButton } from "./ui/icon-button";
 
 interface WebhooksListProps {
   webhook: WebhookListItem;
+  onWebhookChecked: (webhookId: string) => void;
+  isWebhookChecked: boolean;
 }
 
-export function WebhooksListItem({ webhook }: WebhooksListProps) {
+export function WebhooksListItem({
+  webhook,
+  onWebhookChecked,
+  isWebhookChecked,
+}: WebhooksListProps) {
   const queryClient = useQueryClient();
 
   const { mutate: deleteWebhook } = useMutation({
@@ -27,7 +33,10 @@ export function WebhooksListItem({ webhook }: WebhooksListProps) {
   return (
     <div className="rounded-lg transition-colors duration-150 hover:bg-zinc-700/50 group">
       <div className="flex items-start gap-3 px-4 py-2.5">
-        <Checkbox />
+        <Checkbox
+          onCheckedChange={() => onWebhookChecked(webhook.id)}
+          checked={isWebhookChecked}
+        />
 
         <Link
           to={`/webhooks/$id`}
