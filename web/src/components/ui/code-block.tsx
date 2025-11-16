@@ -1,8 +1,8 @@
-import { type ComponentProps, useEffect, useState } from "react";
-import { codeToHtml } from "shiki";
-import { twMerge } from "tailwind-merge";
+import { type ComponentProps, useEffect, useState } from 'react';
+import { codeToHtml } from 'shiki';
+import { twMerge } from 'tailwind-merge';
 
-interface CodeBlockProps extends ComponentProps<"div"> {
+interface CodeBlockProps extends ComponentProps<'div'> {
   code: Record<string, unknown> | string;
   language?: string;
 }
@@ -10,18 +10,18 @@ interface CodeBlockProps extends ComponentProps<"div"> {
 export function CodeBlock({
   className,
   code,
-  language = "json",
+  language = 'json',
   ...props
 }: CodeBlockProps) {
-  const [parsedCode, setParsedCode] = useState("");
+  const [parsedCode, setParsedCode] = useState('');
 
   useEffect(() => {
     if (code) {
       const codeString =
-        typeof code === "string" ? code : JSON.stringify(code, null, 2);
+        typeof code === 'string' ? code : JSON.stringify(code, null, 2);
       codeToHtml(codeString, {
         lang: language,
-        theme: "vesper",
+        theme: 'vesper',
       }).then(setParsedCode);
     }
   }, [code, language]);
@@ -29,7 +29,7 @@ export function CodeBlock({
   return (
     <div
       className={twMerge([
-        "relative rounded-lg border border-zinc-700 overflow-auto",
+        'relative rounded-lg border border-zinc-700 overflow-auto',
         className,
       ])}
       {...props}

@@ -1,6 +1,6 @@
-import { format } from "date-fns";
-import { Badge } from "./ui/badge";
-import { Divider } from "./ui/divider";
+import { format } from 'date-fns';
+import { Badge } from './ui/badge';
+import { Divider } from './ui/divider';
 
 interface WebhookDetailsHeaderProps {
   details: {
@@ -31,7 +31,7 @@ export function WebhookDetailsHeader({ details }: WebhookDetailsHeaderProps) {
 
         <div className="flex items-center gap-1 text-sm text-zinc-400">
           <span>at</span>
-          <span>{format(details.createdAt, "MMMM do, ha")}</span>
+          <span>{format(details.createdAt, 'MMMM do, ha')}</span>
         </div>
       </div>
     </div>

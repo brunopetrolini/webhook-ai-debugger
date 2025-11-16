@@ -8,70 +8,70 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { Route as rootRouteImport } from './routes/__root'
-import { Route as IndexRouteImport } from './routes/index'
-import { Route as WebhooksIdRouteImport } from './routes/webhooks.$id'
+import { Route as rootRouteImport } from './routes/__root';
+import { Route as IndexRouteImport } from './routes/index';
+import { Route as WebhooksIdRouteImport } from './routes/webhooks.$id';
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const WebhooksIdRoute = WebhooksIdRouteImport.update({
   id: '/webhooks/$id',
   path: '/webhooks/$id',
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/webhooks/$id': typeof WebhooksIdRoute
+  '/': typeof IndexRoute;
+  '/webhooks/$id': typeof WebhooksIdRoute;
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/webhooks/$id': typeof WebhooksIdRoute
+  '/': typeof IndexRoute;
+  '/webhooks/$id': typeof WebhooksIdRoute;
 }
 export interface FileRoutesById {
-  __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
-  '/webhooks/$id': typeof WebhooksIdRoute
+  __root__: typeof rootRouteImport;
+  '/': typeof IndexRoute;
+  '/webhooks/$id': typeof WebhooksIdRoute;
 }
 export interface FileRouteTypes {
-  fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/webhooks/$id'
-  fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/webhooks/$id'
-  id: '__root__' | '/' | '/webhooks/$id'
-  fileRoutesById: FileRoutesById
+  fileRoutesByFullPath: FileRoutesByFullPath;
+  fullPaths: '/' | '/webhooks/$id';
+  fileRoutesByTo: FileRoutesByTo;
+  to: '/' | '/webhooks/$id';
+  id: '__root__' | '/' | '/webhooks/$id';
+  fileRoutesById: FileRoutesById;
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  WebhooksIdRoute: typeof WebhooksIdRoute
+  IndexRoute: typeof IndexRoute;
+  WebhooksIdRoute: typeof WebhooksIdRoute;
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
     '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
+      id: '/';
+      path: '/';
+      fullPath: '/';
+      preLoaderRoute: typeof IndexRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
     '/webhooks/$id': {
-      id: '/webhooks/$id'
-      path: '/webhooks/$id'
-      fullPath: '/webhooks/$id'
-      preLoaderRoute: typeof WebhooksIdRouteImport
-      parentRoute: typeof rootRouteImport
-    }
+      id: '/webhooks/$id';
+      path: '/webhooks/$id';
+      fullPath: '/webhooks/$id';
+      preLoaderRoute: typeof WebhooksIdRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   WebhooksIdRoute: WebhooksIdRoute,
-}
+};
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
-  ._addFileTypes<FileRouteTypes>()
+  ._addFileTypes<FileRouteTypes>();

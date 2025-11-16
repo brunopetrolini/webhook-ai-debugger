@@ -1,10 +1,10 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Link } from "@tanstack/react-router";
-import { formatDistanceToNow } from "date-fns";
-import { Trash2Icon } from "lucide-react";
-import type { WebhookListItem } from "../http/schemas/webhooks";
-import { Checkbox } from "./ui/checkbox";
-import { IconButton } from "./ui/icon-button";
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { Link } from '@tanstack/react-router';
+import { formatDistanceToNow } from 'date-fns';
+import { Trash2Icon } from 'lucide-react';
+import type { WebhookListItem } from '../http/schemas/webhooks';
+import { Checkbox } from './ui/checkbox';
+import { IconButton } from './ui/icon-button';
 
 interface WebhooksListProps {
   webhook: WebhookListItem;
@@ -22,11 +22,11 @@ export function WebhooksListItem({
   const { mutate: deleteWebhook } = useMutation({
     mutationFn: async (id: string) => {
       await fetch(`http://localhost:4000/api/webhooks/${id}`, {
-        method: "DELETE",
+        method: 'DELETE',
       });
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["webhooks"] });
+      queryClient.invalidateQueries({ queryKey: ['webhooks'] });
     },
   });
 

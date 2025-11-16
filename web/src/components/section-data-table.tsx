@@ -1,7 +1,7 @@
-import type { ComponentProps } from "react";
-import { twMerge } from "tailwind-merge";
+import type { ComponentProps } from 'react';
+import { twMerge } from 'tailwind-merge';
 
-interface SectionDataTableProps extends ComponentProps<"div"> {
+interface SectionDataTableProps extends ComponentProps<'div'> {
   data: Array<{ key: string; value: string }>;
 }
 
@@ -13,7 +13,7 @@ export function SectionDataTable({
   return (
     <div
       className={twMerge([
-        "overflow-hidden rounded-lg border border-zinc-700",
+        'overflow-hidden rounded-lg border border-zinc-700',
         className,
       ])}
       {...props}

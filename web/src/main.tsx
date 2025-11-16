@@ -1,21 +1,21 @@
-import "./index.css";
+import './index.css';
 
-import { createRouter, RouterProvider } from "@tanstack/react-router";
-import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
+import { createRouter, RouterProvider } from '@tanstack/react-router';
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
 
-import { routeTree } from "./routeTree.gen";
+import { routeTree } from './routeTree.gen';
 
 const router = createRouter({ routeTree });
 
-declare module "@tanstack/react-router" {
+declare module '@tanstack/react-router' {
   interface Register {
     router: typeof router;
   }
 }
 
 // biome-ignore lint/style/noNonNullAssertion: root element is guaranteed to exist
-createRoot(document.getElementById("root")!).render(
+createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <RouterProvider router={router} />
   </StrictMode>,

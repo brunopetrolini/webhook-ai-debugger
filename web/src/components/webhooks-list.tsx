@@ -1,10 +1,10 @@
-import * as Dialog from "@radix-ui/react-dialog";
-import { useMutation, useSuspenseInfiniteQuery } from "@tanstack/react-query";
-import { LoaderCircle, Wand2 } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
-import { webhookListSchema } from "../http/schemas/webhooks";
-import { CodeBlock } from "./ui/code-block";
-import { WebhooksListItem } from "./webhooks-list-item";
+import * as Dialog from '@radix-ui/react-dialog';
+import { useMutation, useSuspenseInfiniteQuery } from '@tanstack/react-query';
+import { LoaderCircle, Wand2 } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
+import { webhookListSchema } from '../http/schemas/webhooks';
+import { CodeBlock } from './ui/code-block';
+import { WebhooksListItem } from './webhooks-list-item';
 
 export function WebhooksList() {
   const loadMoreRef = useRef<HTMLDivElement>(null);
@@ -17,12 +17,12 @@ export function WebhooksList() {
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useSuspenseInfiniteQuery({
-      queryKey: ["webhooks"],
+      queryKey: ['webhooks'],
       queryFn: async ({ pageParam }) => {
-        const url = new URL("http://localhost:4000/api/webhooks");
+        const url = new URL('http://localhost:4000/api/webhooks');
 
         if (pageParam) {
-          url.searchParams.set("cursor", pageParam);
+          url.searchParams.set('cursor', pageParam);
         }
 
         const response = await fetch(url);
@@ -38,12 +38,12 @@ export function WebhooksList() {
   const webhooks = data.pages.flatMap((page) => page.webhooks);
 
   const { mutate, isPending } = useMutation({
-    mutationKey: ["generate-handler"],
+    mutationKey: ['generate-handler'],
     mutationFn: async (webhooksIds: string[]) => {
-      const response = await fetch("http://localhost:4000/api/generate", {
-        method: "POST",
+      const response = await fetch('http://localhost:4000/api/generate', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           webhookIds: webhooksIds,

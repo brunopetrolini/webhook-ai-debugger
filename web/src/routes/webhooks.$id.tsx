@@ -1,9 +1,9 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { Suspense } from "react";
-import { Loading } from "../components/loading";
-import { WebhookDetails } from "../components/webhook-details";
+import { createFileRoute } from '@tanstack/react-router';
+import { Suspense } from 'react';
+import { Loading } from '../components/loading';
+import { WebhookDetails } from '../components/webhook-details';
 
-export const Route = createFileRoute("/webhooks/$id")({
+export const Route = createFileRoute('/webhooks/$id')({
   component: RouteComponent,
 });
 

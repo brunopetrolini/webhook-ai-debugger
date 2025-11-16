@@ -1,7 +1,7 @@
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { createRootRoute, Outlet } from "@tanstack/react-router";
-import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
-import { Sidebar } from "../components/sidebar";
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { createRootRoute, Outlet } from '@tanstack/react-router';
+import { Panel, PanelGroup, PanelResizeHandle } from 'react-resizable-panels';
+import { Sidebar } from '../components/sidebar';
 
 const queryClient = new QueryClient();
 

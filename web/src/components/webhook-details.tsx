@@ -1,9 +1,9 @@
-import { useSuspenseQuery } from "@tanstack/react-query";
-import { webhookDetailsSchema } from "../http/schemas/webhooks";
-import { SectionDataTable } from "./section-data-table";
-import { SectionTitle } from "./section-title";
-import { CodeBlock } from "./ui/code-block";
-import { WebhookDetailsHeader } from "./webhook-detail-header";
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { webhookDetailsSchema } from '../http/schemas/webhooks';
+import { SectionDataTable } from './section-data-table';
+import { SectionTitle } from './section-title';
+import { CodeBlock } from './ui/code-block';
+import { WebhookDetailsHeader } from './webhook-detail-header';
 
 interface WebhookDetailsProps {
   id: string;
@@ -11,7 +11,7 @@ interface WebhookDetailsProps {
 
 export function WebhookDetails({ id }: WebhookDetailsProps) {
   const { data } = useSuspenseQuery({
-    queryKey: ["webhook", id],
+    queryKey: ['webhook', id],
     queryFn: async () => {
       const response = await fetch(`http://localhost:4000/api/webhooks/${id}`);
       const data = await response.json();
@@ -27,12 +27,12 @@ export function WebhookDetails({ id }: WebhookDetailsProps) {
   };
 
   const overviewData = [
-    { key: "Method", value: data.method },
-    { key: "Status Code", value: data.statusCode.toString() },
-    { key: "Content-Type", value: data.contentType || "N/A" },
+    { key: 'Method', value: data.method },
+    { key: 'Status Code', value: data.statusCode.toString() },
+    { key: 'Content-Type', value: data.contentType || 'N/A' },
     {
-      key: "Content-Length",
-      value: data.contentLength ? `${data.contentLength} bytes` : "N/A",
+      key: 'Content-Length',
+      value: data.contentLength ? `${data.contentLength} bytes` : 'N/A',
     },
   ];
 
