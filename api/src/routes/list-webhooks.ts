@@ -1,19 +1,19 @@
-import { desc, lt } from "drizzle-orm";
-import { createSelectSchema } from "drizzle-zod";
-import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
-import { z } from "zod";
+import { desc, lt } from 'drizzle-orm';
+import { createSelectSchema } from 'drizzle-zod';
+import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod';
+import { z } from 'zod';
 
-import { db } from "@/db";
-import { webhooks } from "@/db/schema";
+import { db } from '@/db';
+import { webhooks } from '@/db/schema';
 
 export const listWebhooks: FastifyPluginAsyncZod = async (app) => {
   app.get(
-    "/webhooks",
+    '/webhooks',
     {
       schema: {
-        summary: "List Webhooks",
-        description: "List all webhooks configured in inspector",
-        tags: ["Webhooks"],
+        summary: 'List Webhooks',
+        description: 'List all webhooks configured in inspector',
+        tags: ['Webhooks'],
         querystring: z.object({
           limit: z.coerce.number().min(1).max(100).default(20),
           cursor: z.string().optional(),

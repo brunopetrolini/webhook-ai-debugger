@@ -1,21 +1,21 @@
-import { db } from "@/db";
-import { webhooks } from "@/db/schema";
-import { env } from "@/env";
-import { createGoogleGenerativeAI } from "@ai-sdk/google";
-import { generateText } from "ai";
-import { inArray } from "drizzle-orm";
-import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
-import { z } from "zod";
+import { db } from '@/db';
+import { webhooks } from '@/db/schema';
+import { env } from '@/env';
+import { createGoogleGenerativeAI } from '@ai-sdk/google';
+import { generateText } from 'ai';
+import { inArray } from 'drizzle-orm';
+import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod';
+import { z } from 'zod';
 
 export const generateHandler: FastifyPluginAsyncZod = async (app) => {
   app.post(
-    "/generate",
+    '/generate',
     {
       schema: {
-        summary: "Generate a TypeScript handler",
+        summary: 'Generate a TypeScript handler',
         description:
-          "Uses AI to generate a TypeScript handler for the selected webhooks.",
-        tags: ["Webhooks"],
+          'Uses AI to generate a TypeScript handler for the selected webhooks.',
+        tags: ['Webhooks'],
         body: z.object({
           webhookIds: z.array(z.uuidv7()),
         }),
@@ -34,13 +34,13 @@ export const generateHandler: FastifyPluginAsyncZod = async (app) => {
         .from(webhooks)
         .where(inArray(webhooks.id, webhookIds));
 
-      const webhooksBodies = result.map((webhook) => webhook.body).join("\n\n");
+      const webhooksBodies = result.map((webhook) => webhook.body).join('\n\n');
 
       const google = createGoogleGenerativeAI({
         apiKey: env.GEMINI_API_KEY,
       });
       const { text } = await generateText({
-        model: google("gemini-2.5-flash"),
+        model: google('gemini-2.5-flash'),
         prompt: `
         You are an expert Senior TypeScript developer, specializing in creating robust, type-safe data validation and handling functions using Zod.
 

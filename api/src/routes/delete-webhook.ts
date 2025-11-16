@@ -1,18 +1,18 @@
-import { eq } from "drizzle-orm";
-import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
-import { z } from "zod";
+import { eq } from 'drizzle-orm';
+import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod';
+import { z } from 'zod';
 
-import { db } from "@/db";
-import { webhooks } from "@/db/schema";
+import { db } from '@/db';
+import { webhooks } from '@/db/schema';
 
 export const deleteWebhook: FastifyPluginAsyncZod = async (app) => {
   app.delete(
-    "/webhooks/:id",
+    '/webhooks/:id',
     {
       schema: {
-        summary: "Delete Webhook",
-        description: "Delete a specific webhook by ID",
-        tags: ["Webhooks"],
+        summary: 'Delete Webhook',
+        description: 'Delete a specific webhook by ID',
+        tags: ['Webhooks'],
         params: z.object({
           id: z.uuidv7(),
         }),
